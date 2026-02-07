@@ -18,7 +18,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Check Python Code Complexity
-      uses: rohaquinlop/complexipy-action@v2
+      uses: rohaquinlop/complexipy-action@v5
       with:
         paths: '.'  # Analyze the entire repository
         ignore_complexity: false # Set to true to ignore complexity checks
@@ -26,22 +26,24 @@ jobs:
 
 ## Inputs
 
-| Input               | Description                                                                                                                      | Required | Default                   |
-| ------------------- | -------------------------------------------------------------------------------------------------------------------------------- | -------- | ------------------------- |
-| `paths`             | Paths to analyze. Can be local paths or a git repository URL.                                                                    | Yes      | `${{ github.workspace }}` |
-| `ignore_complexity` | Ignore complexity threshold and show all functions. By default, complexipy will fail if a function exceeds a certain complexity. | No       | `false`                   |
-| `output_csv`        | Generate results in a CSV file.                                                                                                  | No       | `false`                   |
-| `output_json`       | Generate results in a JSON file.                                                                                                 | No       | `false`                   |
-| `details`           | Output detail level (`low` or `normal`).                                                                                         | No       | `normal`                  |
-| `quiet`             | Suppress console output.                                                                                                         | No       | `false`                   |
-| `sort`              | Sort results by complexity (`asc`, `desc`, or `name`).                                                                           | No       | `asc`                     |
+| Input                    | Description                                                                                                                     | Required | Default                   |
+| ------------------------ | ------------------------------------------------------------------------------------------------------------------------------- | -------- | ------------------------- |
+| `paths`                  | Paths to analyze. Can be local paths or a git repository URL.                                                                   | Yes      | `${{ github.workspace }}` |
+| `max_complexity_allowed` | Max complexity allowed per function.                                                                                            | No       | `15`                      |
+| `quiet`                  | Suppress console output.                                                                                                        | No       | `false`                   |
+| `ignore_complexity`      | Ignore complexity threshold and show all functions. By default, complexipy will fail if a function exceeds a certain complexity. | No       | `false`                   |
+| `failed`                 | Show only functions that exceed the max complexity threshold.                                                                    | No       | `false`                   |
+| `sort`                   | Sort results by complexity (`asc`, `desc`, or `file_name`).                                                                     | No       | `asc`                     |
+| `output_csv`             | Generate results in a CSV file.                                                                                                 | No       | `false`                   |
+| `output_json`            | Generate results in a JSON file.                                                                                                | No       | `false`                   |
+| `exclude`                | Paths to the directories or files to exclude.                                                                                   | No       | `''`                      |
 
 ## Examples
 
 ### Basic Usage
 
 ```yaml
-- uses: rohaquinlop/complexipy-action@v2
+- uses: rohaquinlop/complexipy-action@v5
   with:
     paths: '.'
 ```
@@ -49,37 +51,55 @@ jobs:
 ### Ignore Complexity Threshold
 
 ```yaml
-- uses: rohaquinlop/complexipy-action@v2
+- uses: rohaquinlop/complexipy-action@v5
   with:
     paths: './src'
     ignore_complexity: true
 ```
 
+### Set Max Complexity Threshold
+
+```yaml
+- uses: rohaquinlop/complexipy-action@v5
+  with:
+    paths: '.'
+    max_complexity_allowed: 10
+```
+
+### Show Only Failed Functions
+
+```yaml
+- uses: rohaquinlop/complexipy-action@v5
+  with:
+    paths: '.'
+    failed: true
+```
+
 ### Generate CSV Report
 
 ```yaml
-- uses: rohaquinlop/complexipy-action@v2
+- uses: rohaquinlop/complexipy-action@v5
   with:
     paths: '.'
     output_csv: true
 ```
 
 ### Generate JSON Report
+
 ```yaml
-- uses: rohaquinlop/complexipy-action@v2
+- uses: rohaquinlop/complexipy-action@v5
   with:
     paths: '.'
     output_json: true
 ```
 
-### Analyze Specific Directory with Low Detail Output
+### Exclude Directories
 
 ```yaml
-- uses: rohaquinlop/complexipy-action@v2
+- uses: rohaquinlop/complexipy-action@v5
   with:
-    paths: './src/python'
-    details: 'low'
-    sort: 'desc'
+    paths: '.'
+    exclude: 'tests/ docs/'
 ```
 
 ## Output
