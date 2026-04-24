@@ -2,44 +2,54 @@ name: complexipy
 description: Calculate the cognitive complexity of Python files, written in Rust.
 inputs:
   paths:
-    description: Paths to analyze. Can be local paths or a git repository URL.
+    description: Paths to the directories or files to analyze, it can be local paths or a git repository URL.
     required: true
     default: ${{ github.workspace }}
-  output_csv:
-    description: Generate results in a CSV file.
+  max_complexity_allowed:
+    description: Max complexity allowed per function.
     required: false
-    default: 'false'
-  output_json:
-    description: Generate results in a JSON file.
+    default: '15'
+  quiet:
+    description: Suppress the output to the console.
     required: false
     default: 'false'
   ignore_complexity:
-    description: Ignore complexity threshold and show all functions. By default, complexipy will fail if a function exceeds a certain complexity.
+    description: Ignore the complexity and show all functions. By default, complexipy will fail if a function exceeds a certain complexity.
     required: false
     default: 'false'
-  details:
-    description: 'Output detail level (`low` or `normal`).'
-    required: false
-    default: "normal"
-  quiet:
-    description: Suppress console output.
+  failed:
+    description: Show only functions that exceed the max complexity threshold.
     required: false
     default: 'false'
   sort:
-    description: 'Sort results by complexity (`asc`, `desc`, or `name`).'
+    description: Sort the output by complexity, it can be 'asc', 'desc' or 'file_name'. Default is 'asc'.
     required: false
-    default: "asc"
+    default: 'asc'
+  output_csv:
+    description: Output the results to a CSV file.
+    required: false
+    default: 'false'
+  output_json:
+    description: Output the results to a JSON file.
+    required: false
+    default: 'false'
+  exclude:
+    description: Paths to the directories or files to exclude.
+    required: false
+    default: ''
 runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
     - ${{ inputs.paths }}
+    - ${{ inputs.max_complexity_allowed }}
+    - ${{ inputs.quiet }}
     - ${{ inputs.ignore_complexity }}
+    - ${{ inputs.failed }}
+    - ${{ inputs.sort }}
     - ${{ inputs.output_csv }}
     - ${{ inputs.output_json }}
-    - ${{ inputs.details }}
-    - ${{ inputs.quiet }}
-    - ${{ inputs.sort }}
+    - ${{ inputs.exclude }}
 branding:
   icon: "check-circle"
   color: "purple"

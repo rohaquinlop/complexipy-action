@@ -1,39 +1,51 @@
 #!/bin/sh -l
 
-files=$(echo $1 | tr '\n' ' ')
+paths=$(echo $1 | tr '\n' ' ')
+
+max_complexity_allowed=""
+if [ -n "$2" ]; then
+    max_complexity_allowed="-mx $2"
+fi
+
+quiet=""
+if [ "$3" = "true" ]; then
+    quiet="-q"
+fi
 
 ignore_complexity=""
-if [ "$2" = "true" ]; then
+if [ "$4" = "true" ]; then
     ignore_complexity="-i"
 fi
 
+failed=""
+if [ "$5" = "true" ]; then
+    failed="-f"
+fi
+
+sort=""
+if [ "$6" = "asc" ]; then
+    sort="-s asc"
+elif [ "$6" = "desc" ]; then
+    sort="-s desc"
+elif [ "$6" = "file_name" ]; then
+    sort="-s file_name"
+fi
+
 output_csv=""
-if [ "$3" = "true" ]; then
+if [ "$7" = "true" ]; then
     output_csv="-c"
 fi
 
 output_json=""
-if [ "$4" = "true" ]; then
+if [ "$8" = "true" ]; then
     output_json="-j"
 fi
 
-details="-d normal"
-if [ "$5" = "low" ]; then
-    details="-d low"
+exclude=""
+if [ -n "${9}" ]; then
+    for dir in ${9}; do
+        exclude="$exclude -e $dir"
+    done
 fi
 
-quiet=""
-if [ "$6" = "true" ]; then
-    quiet="-q"
-fi
-
-sort=""
-if [ "$7" = "asc" ]; then
-    sort="-s asc"
-elif [ "$7" = "desc" ]; then
-    sort="-s desc"
-elif [ "$7" = "name" ]; then
-    sort="-s name"
-fi
-
-complexipy $files $ignore_complexity $output_csv $output_json $details $quiet $sort
+complexipy $paths $max_complexity_allowed $quiet $ignore_complexity $failed $sort $output_csv $output_json $exclude

@@ -11,7 +11,4 @@ jobs:
         uses: ./
         id: complexipy
         with:
-          paths: |
-            .
-            .github/
-            .github/workflows/
+          paths: '.'
