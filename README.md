@@ -16,9 +16,9 @@ jobs:
   complexity:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
     - name: Check Python Code Complexity
-      uses: rohaquinlop/complexipy-action@v5
+      uses: rohaquinlop/complexipy-action@v6
       with:
         paths: '.'  # Analyze the entire repository
         ignore_complexity: false # Set to true to ignore complexity checks
@@ -43,7 +43,7 @@ jobs:
 ### Basic Usage
 
 ```yaml
-- uses: rohaquinlop/complexipy-action@v5
+- uses: rohaquinlop/complexipy-action@v6
   with:
     paths: '.'
 ```
@@ -51,7 +51,7 @@ jobs:
 ### Ignore Complexity Threshold
 
 ```yaml
-- uses: rohaquinlop/complexipy-action@v5
+- uses: rohaquinlop/complexipy-action@v6
   with:
     paths: './src'
     ignore_complexity: true
@@ -60,7 +60,7 @@ jobs:
 ### Set Max Complexity Threshold
 
 ```yaml
-- uses: rohaquinlop/complexipy-action@v5
+- uses: rohaquinlop/complexipy-action@v6
   with:
     paths: '.'
     max_complexity_allowed: 10
@@ -69,7 +69,7 @@ jobs:
 ### Show Only Failed Functions
 
 ```yaml
-- uses: rohaquinlop/complexipy-action@v5
+- uses: rohaquinlop/complexipy-action@v6
   with:
     paths: '.'
     failed: true
@@ -78,7 +78,7 @@ jobs:
 ### Generate CSV Report
 
 ```yaml
-- uses: rohaquinlop/complexipy-action@v5
+- uses: rohaquinlop/complexipy-action@v6
   with:
     paths: '.'
     output_csv: true
@@ -87,7 +87,7 @@ jobs:
 ### Generate JSON Report
 
 ```yaml
-- uses: rohaquinlop/complexipy-action@v5
+- uses: rohaquinlop/complexipy-action@v6
   with:
     paths: '.'
     output_json: true
@@ -96,7 +96,7 @@ jobs:
 ### Exclude Directories
 
 ```yaml
-- uses: rohaquinlop/complexipy-action@v5
+- uses: rohaquinlop/complexipy-action@v6
   with:
     paths: '.'
     exclude: 'tests/ docs/'
