@@ -17,14 +17,16 @@ jobs:
             - name: Update version
               run: |
                   VERSION="${{ github.event.client_payload.version }}"
+                  MAJOR=$(echo "${VERSION}" | cut -d. -f1)
                   sed -i "s/complexipy==.*/complexipy==${VERSION}/" Dockerfile
+                  sed -i "s/@v[0-9]*/@v${MAJOR}/" README.md
 
             - name: Commit and tag
               run: |
                   VERSION="${{ github.event.client_payload.version }}"
                   git config user.name "github-actions[bot]"
                   git config user.email "github-actions[bot]@users.noreply.github.com"
-                  git add Dockerfile
+                  git add Dockerfile README.md
                   git commit -m "chore: bump complexipy to ${VERSION}"
                   git tag "v${VERSION}"
                   git push origin main "v${VERSION}"
