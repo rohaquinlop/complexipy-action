@@ -27,7 +27,7 @@ jobs:
                   VERSION="${{ github.event.client_payload.version }}"
                   MAJOR=$(echo "${VERSION}" | cut -d. -f1)
                   sed -i "s/complexipy==.*/complexipy==${VERSION}/" Dockerfile
-                  sed -i "s/@v[0-9]*/@v${MAJOR}/" README.md
+                  sed -i "s/complexipy-action@v[0-9]*/complexipy-action@v${MAJOR}/" README.md
 
             - name: Commit and tag
               run: |
@@ -39,6 +39,9 @@ jobs:
                   git tag "v${VERSION}" 2>/dev/null || echo "tag v${VERSION} already exists"
                   git push origin main
                   git push origin "v${VERSION}" || echo "tag v${VERSION} already pushed"
+                  MAJOR=$(echo "${VERSION}" | cut -d. -f1)
+                  git tag -f "v${MAJOR}"
+                  git push -f origin "v${MAJOR}"
 
             - name: Create GitHub Release
               env:
