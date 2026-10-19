@@ -4,7 +4,7 @@ paths=$(echo $1 | tr '\n' ' ')
 
 max_complexity_allowed=""
 if [ -n "$2" ]; then
-    max_complexity_allowed="-mx $2"
+    max_complexity_allowed="--max-complexity-allowed $2"
 fi
 
 quiet=""
@@ -33,12 +33,12 @@ fi
 
 output_csv=""
 if [ "$7" = "true" ]; then
-    output_csv="-c"
+    output_csv="--output-format csv"
 fi
 
 output_json=""
 if [ "$8" = "true" ]; then
-    output_json="-j"
+    output_json="--output-format json"
 fi
 
 exclude=""

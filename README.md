@@ -16,7 +16,7 @@ jobs:
   complexity:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v8
+    - uses: actions/checkout@v4
     - name: Check Python Code Complexity
       uses: rohaquinlop/complexipy-action@v8
       with:
@@ -28,7 +28,7 @@ jobs:
 
 | Input                    | Description                                                                                                                     | Required | Default                   |
 | ------------------------ | ------------------------------------------------------------------------------------------------------------------------------- | -------- | ------------------------- |
-| `paths`                  | Paths to analyze. Can be local paths or a git repository URL.                                                                   | Yes      | `${{ github.workspace }}` |
+| `paths`                  | Paths to the directories or files to analyze.                                                                                   | Yes      | `${{ github.workspace }}` |
 | `max_complexity_allowed` | Max complexity allowed per function.                                                                                            | No       | `15`                      |
 | `quiet`                  | Suppress console output.                                                                                                        | No       | `false`                   |
 | `ignore_complexity`      | Ignore complexity threshold and show all functions. By default, complexipy will fail if a function exceeds a certain complexity. | No       | `false`                   |
@@ -112,7 +112,7 @@ The action will:
 
 ### CSV Output Format
 
-When `output_csv: true`, the action generates a `complexipy.csv` file with the following columns:
+When `output_csv: true`, the action generates a `complexipy-results.csv` file with the following columns:
 - Path
 - File Name
 - Function Name
@@ -120,7 +120,7 @@ When `output_csv: true`, the action generates a `complexipy.csv` file with the f
 
 ### JSON Output Format
 
-When `output_json: true`, the action generates a `complexipy.json` file.
+When `output_json: true`, the action generates a `complexipy-results.json` file.
 
 ## License
 

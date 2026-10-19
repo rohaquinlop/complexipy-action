@@ -2,7 +2,7 @@ name: complexipy
 description: Calculate the cognitive complexity of Python files, written in Rust.
 inputs:
   paths:
-    description: Paths to the directories or files to analyze, it can be local paths or a git repository URL.
+    description: Paths to the directories or files to analyze.
     required: true
     default: ${{ github.workspace }}
   max_complexity_allowed:
