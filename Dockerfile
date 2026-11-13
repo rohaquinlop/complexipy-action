@@ -1,6 +1,6 @@
 FROM python:3.12-slim
 
-RUN pip install complexipy==8.3.0
+RUN pip install complexipy==9.0.0
 
 COPY entrypoint.sh /entrypoint.sh
 
